@@ -95,21 +95,34 @@ class WingSparAnalysisPipeline:
         plt.savefig('outputs/static_boxplot.png')
 
     def create_animations(self):
-        """Module 5: Optimized Animation"""
-        if self.cleaned_df is None: return
+        """Module 5: Dual-Dynamic Visualization Pipeline"""
+        if self.df is None: return
         
-        # Take every 50th row to reduce file size significantly
+        # --- Animation 1: Structural Response (Single Point vs Load) ---
+        # Using cleaned_df (Node 19 only)
         sampled_df = self.cleaned_df.iloc[::50, :].sort_values(by='load_factor_g')
-        
         fig1 = px.scatter(sampled_df, x="load_factor_g", y="deflection_noisy", 
                          animation_frame="load_factor_g",
                          range_x=[-1, 11], range_y=[-1, 1],
-                         title="Structural Response Dynamics")
-        
-        # This is the ONLY line you need to save the file correctly
+                         title="Animation A: Tip Deflection vs Load Factor")
         fig1.write_html("outputs/animation_structural_response.html", include_plotlyjs='cdn')
-        print("Animations saved successfully to the /outputs folder.")
 
+        # --- Animation 2: Spatial Bending Dynamics (Whole Spar) ---
+        # We need the full df here to see all nodes (0-19)
+        # We'll pick 10 specific timestamps (sample_ids) to animate the "bend"
+        spatial_samples = self.df['sample_id'].unique()[::100]
+        spatial_df = self.df[self.df['sample_id'].isin(spatial_samples)].sort_values(by=['sample_id', 'node_id'])
+        
+        fig2 = px.line(spatial_df, x="x_position", y="deflection_noisy", 
+                        animation_frame="sample_id",
+                        range_x=[0, 3.5], range_y=[-0.2, 0.2],
+                        markers=True,
+                        title="Animation B: Real-Time Wing Spar Bending Profile")
+        
+        fig2.update_layout(xaxis_title="Spanwise Position (m)", yaxis_title="Deflection (m)")
+        fig2.write_html("outputs/animation_spatial_bending.html", include_plotlyjs='cdn')
+        
+        print("Dual animations saved: 'Structural Response' and 'Spatial Bending'.")
 # Execution Entry Point
 if __name__ == "__main__":
     # Ensure output directories exist for GitHub structure [cite: 88]

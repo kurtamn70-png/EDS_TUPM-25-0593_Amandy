@@ -30,9 +30,13 @@ This repository contains a computational pipeline for monitoring the structural 
 
 ---
 
-## Live Simulation
-Access the interactive digital twin here:  
-[View Live Wing Spar Animation](https://kurtamn70-png.github.io/EDS_TUPM-25-0593_Amandy/outputs/animation_structural_response.html)
+## Live Simulations
+Experience the interactive structural models directly in your browser:
+
+| **Animation A: Tip Deflection Response** | **Animation B: Spatial Bending Profile** |
+| :--- | :--- |
+| [View Structural Response Dynamics](https://kurtamn70-png.github.io/EDS_TUPM-25-0593_Amandy/outputs/animation_structural_response.html) | [View Real-Time Spatial Bending](https://kurtamn70-png.github.io/EDS_TUPM-25-0593_Amandy/outputs/animation_spatial_bending.html) |
+| *Focuses on Node 19 behavior vs. Load Factor (G)* | *Focuses on the entire spar shape across all 20 nodes* |
 
 ---
 
